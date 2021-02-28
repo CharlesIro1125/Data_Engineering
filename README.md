@@ -42,35 +42,37 @@ After this, the etl.py file can be run to extract file from the source directory
 
 ###  Example queries.The queries are executed on the test.ipynb folder. 
 
-Number of free users and paid users?
-
-%sql SELECT level, COUNT (level) FROM songplay GROUP BY level ; ;
+>Number of free users and paid users?
+ 
+    ```
+       %sql SELECT level, COUNT (level) FROM songplay GROUP BY level ; ;
+    ```
 
 
 What hour has the highest traffic?
 
-
+```
 %sql SELECT dimTimes.hour, COUNT (dimTimes.hour) AS hour_count FROM (songplay JOIN dimTimes ON \
                                     songplay.start_time=dimTimes.start_time)\
             GROUP BY dimTimes.hour  ORDER BY hour_count DESC;
-            
+```            
             
 How many songs were played by each user?
 
-
-%sql SELECT songplay.user_id, songplay.level, COUNT (songplay.song_id) AS user_count FROM (songplay JOIN dimUsers ON \
+    ```
+    %sql SELECT songplay.user_id, songplay.level, COUNT (songplay.song_id) AS user_count FROM (songplay JOIN dimUsers ON \
                                     songplay.user_id=dimUsers.user_id)\
             GROUP BY songplay.user_id, songplay.level  ORDER BY user_count DESC LIMIT 15;
+    ```            
             
-            
 
-How many songs were played from the most played artist?
+>How many songs were played from the most played artist?
 
-
-%sql SELECT songplay.artist_id, dimArtists.artist_name, COUNT (songplay.artist_id) AS artistcount FROM (songplay JOIN 
+    ```
+    %sql SELECT songplay.artist_id, dimArtists.artist_name, COUNT (songplay.artist_id) AS artistcount FROM (songplay JOIN 
             dimArtists ON songplay.artist_id=dimArtists.artist_id)\    
              GROUP BY songplay.artist_id,dimArtists.artist_name  ORDER BY artistcount DESC LIMIT 5;
-            
+    ```
             
             
 
